@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ContactsService } from '../contacts/contacts.service';
 
@@ -10,10 +10,12 @@ import { ContactsService } from '../contacts/contacts.service';
   styleUrls: ['./edit-contact.component.css']
 })
 export class EditContactComponent implements OnInit {
-  firstName = new FormControl();
-  lastName = new FormControl();
-  dateOfBirth = new FormControl();
-  favoritesRanking = new FormControl();
+  contactForm = new FormGroup({
+    firstName: new FormControl(),
+    lastName: new FormControl(),
+    dateOfBirth: new FormControl(),
+    favoritesRanking: new FormControl(),
+  });
 
   constructor(private route: ActivatedRoute, private contactsService: ContactsService) { }
 
@@ -24,17 +26,17 @@ export class EditContactComponent implements OnInit {
     this.contactsService.getContact(contactId).subscribe((contact) => {
       if (!contact) return;
 
-      this.firstName.setValue(contact.firstName);
-      this.lastName.setValue(contact.lastName);
-      this.dateOfBirth.setValue(contact.dateOfBirth);
-      this.favoritesRanking.setValue(contact.favoritesRanking);
+      this.contactForm.controls.firstName.setValue(contact.firstName);
+      this.contactForm.controls.lastName.setValue(contact.lastName);
+      this.contactForm.controls.dateOfBirth.setValue(contact.dateOfBirth);
+      this.contactForm.controls.favoritesRanking.setValue(contact.favoritesRanking);
     })
   }
 
   saveContact() {
-    console.log(this.firstName.value);
-    console.log(this.lastName.value);
-    console.log(this.dateOfBirth.value);
-    console.log(this.favoritesRanking.value);
+    console.log(this.contactForm.controls.firstName.value);
+    console.log(this.contactForm.controls.lastName.value);
+    console.log(this.contactForm.controls.dateOfBirth.value);
+    console.log(this.contactForm.controls.favoritesRanking.value);
   }
 }

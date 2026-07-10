@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ContactsService } from '../contacts/contacts.service';
 
 @Component({
@@ -11,13 +11,14 @@ import { ContactsService } from '../contacts/contacts.service';
 })
 export class EditContactComponent implements OnInit {
   contactForm = new FormGroup({
+    id: new FormControl(),
     firstName: new FormControl(),
     lastName: new FormControl(),
     dateOfBirth: new FormControl(),
     favoritesRanking: new FormControl(),
   });
 
-  constructor(private route: ActivatedRoute, private contactsService: ContactsService) { }
+  constructor(private route: ActivatedRoute, private contactsService: ContactsService, private router: Router) { }
 
   ngOnInit() {
     const contactId = this.route.snapshot.params['id'];
@@ -26,6 +27,7 @@ export class EditContactComponent implements OnInit {
     this.contactsService.getContact(contactId).subscribe((contact) => {
       if (!contact) return;
 
+      this.contactForm.controls.id.setValue(contact.id);
       this.contactForm.controls.firstName.setValue(contact.firstName);
       this.contactForm.controls.lastName.setValue(contact.lastName);
       this.contactForm.controls.dateOfBirth.setValue(contact.dateOfBirth);
@@ -35,5 +37,8 @@ export class EditContactComponent implements OnInit {
 
   saveContact() {
     console.log(this.contactForm.value);
+    this.contactsService.saveContact(this.contactForm.value).subscribe({
+        next: () => this.router.navigate(['/contacts']),
+    });
   }
 }

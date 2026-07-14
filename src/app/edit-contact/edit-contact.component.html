@@ -20,9 +20,9 @@
           <img src="/assets/plus-grey-blue.png" class="add" />
         </div>
         <div class="radio">
-          <input formControlName="phoneType" type="radio" value="mobile"> Mobile
-          <input formControlName="phoneType" type="radio" value="work"> Work
-          <input formControlName="phoneType" type="radio" value="other"> Other
+          @for(phoneType of phoneTypes; track phoneType.title) {
+            <input formControlName="phoneType" type="radio" [value]="phoneType.value"> {{phoneType.title}}
+          }
         </div>
       </div>
     </section>
@@ -38,9 +38,9 @@
           <input formControlName="state" placeholder="State/Region" />
           <input formControlName="postalCode" placeholder="Zip/Postal Code" />
           <select formControlName="addressType">
-            <option value="home">Home</option>
-            <option value="work">Work</option>
-            <option value="mobile">Other</option>
+            @for(addressType of addressTypes; track addressType.value) {
+              <option [value]="addressType.value">{{ addressType.title }}</option>
+            }
           </select>
         </div>
       </div>

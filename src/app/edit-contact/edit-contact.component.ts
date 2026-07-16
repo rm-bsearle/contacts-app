@@ -52,7 +52,7 @@ export class EditContactComponent implements OnInit {
   }
 
   saveContact() {
-    console.log(this.contactForm.value);
+    console.log(this.contactForm.value.favoritesRanking, typeof this.contactForm.value.favoritesRanking);
     this.contactsService.saveContact(this.contactForm.getRawValue()).subscribe({
         next: () => this.router.navigate(['/contacts']),
     });

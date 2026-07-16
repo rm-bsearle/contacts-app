@@ -18,7 +18,7 @@ export class EditContactComponent implements OnInit {
     personal: false,
     firstName: '',
     lastName: '',
-    dateOfBirth: <Date | null>null,
+    dateOfBirth: '',
     favoritesRanking: <number | null>null,
     phone: this.fb.nonNullable.group({
       phoneNumber: '',
@@ -53,7 +53,7 @@ export class EditContactComponent implements OnInit {
   }
 
   saveContact() {
-    console.log(this.contactForm.value.favoritesRanking, typeof this.contactForm.value.favoritesRanking);
+    console.log(this.contactForm.value.dateOfBirth, typeof this.contactForm.value.dateOfBirth);
     this.contactsService.saveContact(this.contactForm.getRawValue()).subscribe({
         next: () => this.router.navigate(['/contacts']),
     });

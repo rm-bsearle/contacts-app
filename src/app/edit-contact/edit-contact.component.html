@@ -42,7 +42,7 @@
     <section>
       <nav>Address</nav>
       <div>
-        <div formGroupName="address" class="address">
+        <div formGroupName="address" class="address" [class.error]="contactForm.controls.address.invalid && contactForm.controls.address.dirty">
           <div class="flex-group">
             <input formControlName="streetAddress" placeholder="Address" />
             <img src="/assets/plus-grey-blue.png" class="add" />
@@ -55,6 +55,9 @@
               <option [value]="addressType.value">{{ addressType.title }}</option>
             }
           </select>
+          @if (contactForm.controls.address.invalid && contactForm.controls.address.dirty) {
+            <em>Incomplete Addresss</em>
+          }
         </div>
       </div>
     </section>
@@ -66,7 +69,7 @@
     </section>
     <div class="buttons">
       <button class="secondary">Cancel</button>
-      <button class="primary" type="submit">Save</button>
+      <button class="primary" type="submit" [disabled]="contactForm.invalid">Save</button>
     </div>
   </form>
 </div>

@@ -64,7 +64,10 @@
     <section>
       <nav>Notes</nav>
       <div>
-        <textarea placeholder="Notes" rows="5" formControlName="notes"></textarea>
+        <textarea placeholder="Notes" rows="5" formControlName="notes" [class.error]="notes.invalid"></textarea>
+        @if(notes.errors?.['restrictedWords']) {
+          <em>Restricted words found</em>
+        }
       </div>
     </section>
     <div class="buttons">

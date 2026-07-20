@@ -32,7 +32,7 @@ export class EditContactComponent implements OnInit {
       postalCode: ['', Validators.required],
       addressType: '',
     }),
-    notes: ['', restrictedWords]
+    notes: ['', restrictedWords(['foo', 'bar'])]
   });
 
   constructor(

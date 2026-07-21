@@ -1,4 +1,4 @@
-import { Directive, ElementRef, forwardRef, Provider } from '@angular/core';
+import { Directive, ElementRef, forwardRef, HostListener, Provider } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export const DATE_VALUE_PROVIDER: Provider = {
@@ -8,7 +8,7 @@ export const DATE_VALUE_PROVIDER: Provider = {
 };
 
 @Directive({
-  selector: 'input([type=date])[formControlName], input([type=date)[formControl], input([type=date])[ngModel]',
+  selector: 'input([type=date])[formControlName], input([type=date])[formControl], input([type=date])[ngModel]',
   providers: [DATE_VALUE_PROVIDER]
 })
 export class DateValueAccessorDirective implements ControlValueAccessor {
@@ -21,12 +21,19 @@ export class DateValueAccessorDirective implements ControlValueAccessor {
     }
   }
 
+  @HostListener('input', ['$event.target.valueAsDate'])
+  private onChange!: Function;
+
+  @HostListener('blur')
+  private onTouched!: Function;
+
+
   registerOnChange(fn: any): void {
-    throw new Error('Method not implemented.');
+    this.onChange = (valueAsDate: Date) => { fn(valueAsDate); };
   }
 
   registerOnTouched(fn: any): void {
-    throw new Error('Method not implemented.');
+    this.onTouched = fn;
   }
 
   // setDisabledState?(isDisabled: boolean): void {

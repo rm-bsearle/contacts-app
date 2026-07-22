@@ -6,9 +6,10 @@ import { ContactsService } from '../contacts/contacts.service';
 import { phoneTypeValues, addressTypeValues } from '../contacts/contact.model';
 import { restrictedWords } from '../validators/restricted-words.validator';
 import { DateValueAccessorDirective } from '../date-value-accessor/date-value-accessor.directive';
+import { ProfileIconSelectorComponenet } from "../profile-icon-selector/profile-icon-selector.componenet";
 
 @Component({
-  imports: [CommonModule, ReactiveFormsModule, DateValueAccessorDirective],
+  imports: [CommonModule, ReactiveFormsModule, DateValueAccessorDirective, ProfileIconSelectorComponenet],
   templateUrl: './edit-contact.component.html',
   styleUrls: ['./edit-contact.component.css']
 })

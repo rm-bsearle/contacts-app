@@ -9,7 +9,11 @@ export const DATE_VALUE_PROVIDER: Provider = {
 
 @Directive({
   selector: 'input([type=date])[formControlName], input([type=date])[formControl], input([type=date])[ngModel]',
-  providers: [DATE_VALUE_PROVIDER]
+  providers: [DATE_VALUE_PROVIDER],
+  host: {
+    '(input)': 'onChange($event)',
+    '(blur)': 'onTouched()'
+  }
 })
 export class DateValueAccessorDirective implements ControlValueAccessor {
 
@@ -21,15 +25,13 @@ export class DateValueAccessorDirective implements ControlValueAccessor {
     }
   }
 
-  @HostListener('input', ['$event.target.valueAsDate'])
-  private onChange!: Function;
+  protected onChange!: Function;
 
-  @HostListener('blur')
-  private onTouched!: Function;
+  protected onTouched!: Function;
 
 
   registerOnChange(fn: any): void {
-    this.onChange = (valueAsDate: Date) => { fn(valueAsDate); };
+    this.onChange = (inputEvent: InputEvent) => { fn((inputEvent.target as HTMLInputElement | null)?.valueAsDate); };
   }
 
   registerOnTouched(fn: any): void {

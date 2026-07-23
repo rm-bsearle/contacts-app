@@ -29,17 +29,19 @@
     <section>
       <nav>Phone</nav>
       <div formArrayName="phones">
-        <div formGroupName="0" class="flex-column">
-          <div class="flex-group">
-            <input formControlName="phoneNumber" placeholder="Phone" />
-            <img src="/assets/plus-grey-blue.png" class="add" />
+        @for(phone of contactForm.controls.phones.controls; track $index){
+          <div [formGroupName]="$index" class="flex-column">
+            <div class="flex-group">
+              <input formControlName="phoneNumber" placeholder="Phone" />
+              <img src="/assets/plus-grey-blue.png" class="add" (click)="addPhone()" />
+            </div>
+            <div class="radio">
+              @for(phoneType of phoneTypes; track phoneType.title) {
+                <input formControlName="phoneType" type="radio" [value]="phoneType.value"> {{phoneType.title}}
+              }
+            </div>
           </div>
-          <div class="radio">
-            @for(phoneType of phoneTypes; track phoneType.title) {
-              <input formControlName="phoneType" type="radio" [value]="phoneType.value"> {{phoneType.title}}
-            }
-          </div>
-        </div>
+        }
       </div>
     </section>
     <section>

@@ -17,11 +17,11 @@
       <tr [routerLink]="['/contacts/edit', contact.id]">
         <td>{{contact.firstName}} {{contact.lastName}}</td>
         <td>@if(contact.phones[0]){<span>{{contact.phones[0].phoneNumber}}</span>}</td>
-        @if(contact.address) {
+        @if(contact.addresses[0]) {
         <td>
-          {{contact.address.streetAddress}}, {{contact.address.city}},
-          {{contact.address.state}},
-          {{contact.address.postalCode}}
+          {{contact.addresses[0].streetAddress}}, {{contact.addresses[0].city}},
+          {{contact.addresses[0].state}},
+          {{contact.addresses[0].postalCode}}
         </td>
         }
       </tr>
@@ -46,11 +46,11 @@
       <tr [routerLink]="['/contacts/edit', contact.id]">
         <td>{{contact.firstName}} {{contact.lastName}}</td>
         <td>@if(contact.phones[0]){<span>{{contact.phones[0].phoneNumber}}</span>}</td>
-        @if(contact.address) {
+        @if(contact.addresses[0]) {
         <td>
-          {{contact.address.streetAddress}}, {{contact.address.city}},
-          {{contact.address.state}},
-          {{contact.address.postalCode}}
+          {{contact.addresses[0].streetAddress}}, {{contact.addresses[0].city}},
+          {{contact.addresses[0].state}},
+          {{contact.addresses[0].postalCode}}
         </td>
         }
       </tr>

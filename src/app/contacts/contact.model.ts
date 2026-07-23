@@ -7,7 +7,7 @@ export interface Contact {
   dateOfBirth: Date | null;
   favoritesRanking: number | null;
   phones: Phone[];
-  address: Address;
+  addresses: Address[];
   notes: string;
 }
 

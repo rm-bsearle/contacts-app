@@ -45,23 +45,27 @@
       </div>
     </section>
     <section>
-      <nav>Address</nav>
+      <nav>Addresses</nav>
       <div>
-        <div formGroupName="address" class="address" [class.error]="contactForm.controls.address.invalid && contactForm.controls.address.dirty">
-          <div class="flex-group">
-            <input formControlName="streetAddress" placeholder="Address" />
-            <img src="/assets/plus-grey-blue.png" class="add" />
-          </div>
-          <input formControlName="city" placeholder="City" />
-          <input formControlName="state" placeholder="State/Region" />
-          <input formControlName="postalCode" placeholder="Zip/Postal Code" />
-          <select formControlName="addressType">
-            @for(addressType of addressTypes; track addressType.value) {
-              <option [value]="addressType.value">{{ addressType.title }}</option>
-            }
-          </select>
-          @if (contactForm.controls.address.invalid && contactForm.controls.address.dirty) {
-            <em>Incomplete Addresss</em>
+        <div formArrayName="addresses" class="flex-column">
+          @for(address of contactForm.controls.addresses.controls; track $index) {
+            <div [formGroupName]="$index" class="address" [class.error]="address.invalid && address.dirty">
+              <div class="flex-group">
+                <input formControlName="streetAddress" placeholder="Address" />
+                <img src="/assets/plus-grey-blue.png" class="add" (click)="addAddress()" />
+              </div>
+              <input formControlName="city" placeholder="City" />
+              <input formControlName="state" placeholder="State/Region" />
+              <input formControlName="postalCode" placeholder="Zip/Postal Code" />
+              <select formControlName="addressType">
+                @for(addressType of addressTypes; track addressType.value) {
+                  <option [value]="addressType.value">{{ addressType.title }}</option>
+                }
+              </select>
+              @if (address.invalid && address.dirty) {
+                <em>Incomplete Addresss</em>
+              }
+            </div>
           }
         </div>
       </div>

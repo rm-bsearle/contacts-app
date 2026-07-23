@@ -28,15 +28,17 @@
     </section>
     <section>
       <nav>Phone</nav>
-      <div formGroupName="phone" class="flex-column">
-        <div class="flex-group">
-          <input formControlName="phoneNumber" placeholder="Phone" />
-          <img src="/assets/plus-grey-blue.png" class="add" />
-        </div>
-        <div class="radio">
-          @for(phoneType of phoneTypes; track phoneType.title) {
-            <input formControlName="phoneType" type="radio" [value]="phoneType.value"> {{phoneType.title}}
-          }
+      <div formArrayName="phones">
+        <div formGroupName="0" class="flex-column">
+          <div class="flex-group">
+            <input formControlName="phoneNumber" placeholder="Phone" />
+            <img src="/assets/plus-grey-blue.png" class="add" />
+          </div>
+          <div class="radio">
+            @for(phoneType of phoneTypes; track phoneType.title) {
+              <input formControlName="phoneType" type="radio" [value]="phoneType.value"> {{phoneType.title}}
+            }
+          </div>
         </div>
       </div>
     </section>

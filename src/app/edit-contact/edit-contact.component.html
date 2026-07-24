@@ -35,11 +35,15 @@
               <input formControlName="phoneNumber" placeholder="Phone" />
               <img src="/assets/plus-grey-blue.png" class="add" (click)="addPhone()" />
             </div>
+            @if(phone.controls.phoneNumber.invalid) {
+              <em>Preferred Phone is required</em>
+            }
             <div class="radio">
               @for(phoneType of phoneTypes; track phoneType.title) {
                 <input formControlName="phoneType" type="radio" [value]="phoneType.value"> {{phoneType.title}}
               }
             </div>
+            <span><input type="checkbox" formControlName="preferred" /> Preferred</span>
           </div>
         }
       </div>

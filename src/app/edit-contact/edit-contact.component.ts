@@ -88,7 +88,7 @@ export class EditContactComponent implements OnInit {
         else {
           phoneGroup.controls.phoneNumber.removeValidators([Validators.required]);
         }
-        phoneGroup.controls.phoneNumber.updateValueAndValidity();
+        phoneGroup.controls.phoneNumber.updateValueAndValidity({ emitEvent: false });
       });
 
     return phoneGroup;
@@ -112,7 +112,7 @@ export class EditContactComponent implements OnInit {
       .subscribe(() => {
         for(const controlName in addressGroup.controls) {
           addressGroup.get(controlName)?.removeValidators(Validators.required);
-          addressGroup.get(controlName)?.updateValueAndValidity();
+          addressGroup.get(controlName)?.updateValueAndValidity({ emitEvent: false });
         }
       });
 
@@ -121,7 +121,7 @@ export class EditContactComponent implements OnInit {
       .subscribe(() => {
         for(const controlName in addressGroup.controls) {
           addressGroup.get(controlName)?.addValidators(Validators.required);
-          addressGroup.get(controlName)?.updateValueAndValidity();
+          addressGroup.get(controlName)?.updateValueAndValidity({ emitEvent: false });
         }
       })
 

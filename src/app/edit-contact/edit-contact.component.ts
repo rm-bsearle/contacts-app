@@ -9,11 +9,11 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContactsService } from '../contacts/contacts.service';
-import { phoneTypeValues, addressTypeValues } from '../contacts/contact.model';
+import { phoneTypeValues, addressTypeValues, Address } from '../contacts/contact.model';
 import { restrictedWords } from '../validators/restricted-words.validator';
 import { DateValueAccessorDirective } from '../date-value-accessor/date-value-accessor.directive';
 import { ProfileIconSelectorComponenet } from '../profile-icon-selector/profile-icon-selector.componenet';
-import { distinctUntilChanged } from 'rxjs';
+import { debounce, debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   imports: [
@@ -99,13 +99,33 @@ export class EditContactComponent implements OnInit {
   }
 
   private createAddressGroup() {
-    return this.fb.nonNullable.group({
+    const addressGroup = this.fb.nonNullable.group({
       streetAddress: ['', Validators.required],
       city: ['', Validators.required],
       state: ['', Validators.required],
       postalCode: ['', Validators.required],
       addressType: '',
     });
+
+    addressGroup.valueChanges
+      .pipe(distinctUntilChanged(this.stringifyCompare))
+      .subscribe(() => {
+        for(const controlName in addressGroup.controls) {
+          addressGroup.get(controlName)?.removeValidators(Validators.required);
+          addressGroup.get(controlName)?.updateValueAndValidity();
+        }
+      });
+
+    addressGroup.valueChanges
+      .pipe(debounceTime(2000), distinctUntilChanged(this.stringifyCompare))
+      .subscribe(() => {
+        for(const controlName in addressGroup.controls) {
+          addressGroup.get(controlName)?.addValidators(Validators.required);
+          addressGroup.get(controlName)?.updateValueAndValidity();
+        }
+      })
+
+    return addressGroup;
   }
 
   protected addAddress() {
